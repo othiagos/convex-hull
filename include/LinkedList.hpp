@@ -14,14 +14,13 @@ class LinkedList {
     NodeLinkedList<T> *last;
     int size;
 
-    NodeLinkedList<T> *position(int pos) {
+    NodeLinkedList<T> *position(int pos) const {
         NodeLinkedList<T> *p;
         int i;
 
         if ((pos > size) || (pos < 0))
             throw "ERROR: invalid position!";
 
-        // Posiciona na célula desejada
         p = first;
         for (i = 0; i < pos; i++) {
             p = p->next;
@@ -35,7 +34,7 @@ class LinkedList {
         int i;
 
         if ((pos > size) || (pos <= 0))
-            throw "ERRO: Posicao Invalida!";
+            throw "ERROR: invalid position!";
 
         // Posiciona na célula anterior a desejada
         p = first;
@@ -58,11 +57,11 @@ class LinkedList {
         delete first;
     }
 
-    int get_size() {
+    int get_size() const {
         return this->size;
     }
 
-    T get_item(int pos) {
+    T get_item(int pos) const {
         NodeLinkedList<T> *p;
         p = position(pos);
         return p->item;
@@ -166,7 +165,7 @@ class LinkedList {
         NodeLinkedList<T> *p, *q;
 
         if (size == 0)
-            throw "ERRO: Lista vazia!";
+            throw "ERROR: Empty list!";
 
         if (pos == 0)
             return pop_front();
@@ -189,7 +188,7 @@ class LinkedList {
         NodeLinkedList<T> *p;
 
         if (size == 0)
-            throw "ERRO: Lista vazia!";
+            throw "ERROR: Empty list!";
 
         p = first;
         for (int i = 0; p != nullptr; i++) {
