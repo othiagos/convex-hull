@@ -15,7 +15,10 @@ OBJS = \
 	$(OBJ_DIR)/Sort.o \
 	$(OBJ_DIR)/MergeSort.o \
 	$(OBJ_DIR)/InsertionSort.o \
-	$(OBJ_DIR)/Point.o 
+	$(OBJ_DIR)/RadixSort.o \
+	$(OBJ_DIR)/Point.o \
+	$(OBJ_DIR)/GrahamScan.o \
+	$(OBJ_DIR)/JarvisMarch.o
 
 TEST_OBJS = \
 	$(OBJ_DIR)/TestArrayStack.o
