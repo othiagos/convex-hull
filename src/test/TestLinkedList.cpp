@@ -8,7 +8,7 @@ TEST_CASE("Check size") {
     list.push_back(3);
     list.push_back(5);
 
-    CHECK(list.get_size() == 3);
+    CHECK(list.size() == 3);
 }
 
 TEST_CASE("Check size") {
@@ -18,7 +18,7 @@ TEST_CASE("Check size") {
     list.push_front(3);
     list.push_front(5);
 
-    CHECK(list.get_size() == 3);
+    CHECK(list.size() == 3);
 }
 
 TEST_CASE("Check push back") {
@@ -55,7 +55,7 @@ TEST_CASE("Check pop back") {
     CHECK(list.pop_back() == 5);
     CHECK(list.pop_back() == 3);
     CHECK(list.pop_back() == 1);
-    CHECK(list.get_size() == 0);
+    CHECK(list.size() == 0);
 }
 
 TEST_CASE("Check pop front") {
@@ -68,7 +68,7 @@ TEST_CASE("Check pop front") {
     CHECK(list.pop_front() == 1);
     CHECK(list.pop_front() == 3);
     CHECK(list.pop_front() == 5);
-    CHECK(list.get_size() == 0);
+    CHECK(list.size() == 0);
 }
 
 TEST_CASE("Check set item") {
@@ -118,7 +118,7 @@ TEST_CASE("Check erase") {
     CHECK(list.erase(4) == 5);
     CHECK(list.erase(2) == 3);
     CHECK(list.erase(0) == 1);
-    CHECK(list.get_size() == 2);
+    CHECK(list.size() == 2);
 }
 
 TEST_CASE("Check operator==") {

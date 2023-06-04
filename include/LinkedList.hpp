@@ -10,14 +10,14 @@ struct NodeLinkedList {
 template <typename T>
 class LinkedList {
   private:
-    NodeLinkedList<T> *first;
-    NodeLinkedList<T> *last;
-    int size;
+    NodeLinkedList<T> *_first;
+    NodeLinkedList<T> *_last;
+    int _size;
 
     NodeLinkedList<T> *position(int pos) const {
-        NodeLinkedList<T> *p = first;
+        NodeLinkedList<T> *p = _first;
 
-        if ((pos > size) || (pos < 0))
+        if ((pos > _size) || (pos < 0))
             throw "ERROR: invalid position!";
 
         for (int i = 0; i < pos; i++) {
@@ -27,10 +27,10 @@ class LinkedList {
     }
 
     NodeLinkedList<T> *position_before(int pos) {
-        NodeLinkedList<T> *p = first;
+        NodeLinkedList<T> *p = _first;
         int i;
 
-        if ((pos > size) || (pos <= 0))
+        if ((pos > _size) || (pos <= 0))
             throw "ERROR: invalid position!";
 
         for (i = 1; i < pos; i++) {
@@ -41,17 +41,17 @@ class LinkedList {
 
   public:
     LinkedList() {
-        first = nullptr;
-        last = nullptr;
-        size = 0;
+        _first = nullptr;
+        _last = nullptr;
+        _size = 0;
     }
 
     LinkedList(const LinkedList<T> &o) {
-        first = nullptr;
-        last = nullptr;
-        size = 0;
+        _first = nullptr;
+        _last = nullptr;
+        _size = 0;
 
-        for (int i = 0; i < o.get_size(); i++) {
+        for (int i = 0; i < o.size(); i++) {
             T item = o.get_item(i);
             this->push_back(T(item));
         }
@@ -61,8 +61,8 @@ class LinkedList {
         clear();
     }
 
-    int get_size() const {
-        return this->size;
+    int size() const {
+        return this->_size;
     }
 
     T get_item(int pos) const {
@@ -88,25 +88,25 @@ class LinkedList {
         NodeLinkedList<T> *node = new NodeLinkedList<T>();
 
         node->item = item;
-        node->next = first;
-        if (first != nullptr)
-            first->prev = node;
-        first = node;
-        size++;
+        node->next = _first;
+        if (_first != nullptr)
+            _first->prev = node;
+        _first = node;
+        _size++;
 
         if (node->next == nullptr)
-            last = node;
+            _last = node;
     }
 
     void push_back(T item) {
 
-        if (size != 0) {
+        if (_size != 0) {
             NodeLinkedList<T> *node = new NodeLinkedList<T>();
             node->item = item;
-            node->prev = last;
-            last->next = node;
-            last = node;
-            size++;
+            node->prev = _last;
+            _last->next = node;
+            _last = node;
+            _size++;
         } else
             push_front(item);
     }
@@ -122,10 +122,10 @@ class LinkedList {
                 p->next->prev = node;
             p->next = node;
             node->prev = p;
-            size++;
+            _size++;
 
             if (node->next == nullptr)
-                last = node;
+                _last = node;
         } else
             push_front(item);
     }
@@ -134,20 +134,20 @@ class LinkedList {
         T aux;
         NodeLinkedList<T> *p;
 
-        if (size == 0)
+        if (_size == 0)
             throw "ERROR: Empty list!";
 
-        p = first;
-        first = p->next;
-        if (first != nullptr)
-            first->prev = nullptr;
-        size--;
+        p = _first;
+        _first = p->next;
+        if (_first != nullptr)
+            _first->prev = nullptr;
+        _size--;
 
-        if (first != nullptr && first->next == nullptr)
-            last = first;
+        if (_first != nullptr && _first->next == nullptr)
+            _last = _first;
 
-        if (first == nullptr)
-            last = first;
+        if (_first == nullptr)
+            _last = _first;
 
         aux = p->item;
         delete p;
@@ -159,16 +159,16 @@ class LinkedList {
         T aux;
         NodeLinkedList<T> *p;
 
-        if (size == 0)
+        if (_size == 0)
             throw "ERROR: Empty list!";
 
-        p = position(size - 1);
-        last = p->prev;
-        if (last != nullptr)
-            last->next = nullptr;
+        p = position(_size - 1);
+        _last = p->prev;
+        if (_last != nullptr)
+            _last->next = nullptr;
         else
-            first = nullptr;
-        size--;
+            _first = nullptr;
+        _size--;
 
         aux = p->item;
 
@@ -180,19 +180,19 @@ class LinkedList {
         T aux;
         NodeLinkedList<T> *p;
 
-        if (size == 0)
+        if (_size == 0)
             throw "ERROR: Empty list!";
 
         if (pos == 0)
             return pop_front();
 
-        if (pos == size - 1)
+        if (pos == _size - 1)
             return pop_back();
 
         p = position(pos);
         p->prev->next = p->next;
         p->next->prev = p->prev;
-        size--;
+        _size--;
 
         aux = p->item;
         delete p;
@@ -202,13 +202,13 @@ class LinkedList {
     void clear() {
         NodeLinkedList<T> *p;
 
-        p = first;
+        p = _first;
         while (p != nullptr) {
-            first = p->next;
+            _first = p->next;
             delete p;
-            p = first;
+            p = _first;
         }
-        last = nullptr;
-        size = 0;
+        _last = nullptr;
+        _size = 0;
     }
 };
