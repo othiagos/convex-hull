@@ -42,6 +42,10 @@ bool Point::operator==(const Point &o) {
     return this->get_x() == o.get_x() && this->get_y() == o.get_y();
 }
 
+std::ostream& operator<<(std::ostream &out, const Point &i) {
+    return out << i.get_x() << ' ' << i.get_y();
+}
+
 double Point::dot_product(Point p) {
     return this->x * p.get_x() + this->y * p.get_y();
 }

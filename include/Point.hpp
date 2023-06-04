@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <cmath>
 
 class Point {
@@ -23,6 +24,8 @@ class Point {
     static int distSq(const Point &p1, const Point &p2);
 
     bool operator==(const Point &o);
+
+    friend std::ostream &operator<<(std::ostream &out, const Point &i);
 
     double angle(Point p);
 };
