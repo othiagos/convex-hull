@@ -11,21 +11,22 @@
 #include <string>
 #include <sstream>
 #include <ctime>
+#include <iomanip>
 #include <unistd.h>
-
-void test(LinkedList<Point> list) {
-    list.pop_back();
-}
 
 int main(int argc, char **argv) {
 
-    LinkedList<Point> list,  *result = nullptr;
+    LinkedList<Point> list, result;
     std::ifstream file;
-    Point p;
     std::string line;
+    Point p;
     std::istringstream number;
-    GrahamScan gs(new MergeSort);
+
+    GrahamScan mergeSort = GrahamScan(new MergeSort);
+    GrahamScan insertionSort = GrahamScan(new InsertionSort);
+    GrahamScan radixSort = GrahamScan(new RadixSort);
     JarvisMarch jm;
+    clock_t times[4];
     clock_t t;
     
     int c;
@@ -37,7 +38,6 @@ int main(int argc, char **argv) {
             if (!file.is_open())
                 return -1;
 
-            // list = new LinkedList<Point>;
             while (getline(file, line)) {
                 number = std::istringstream(line);
 
@@ -49,18 +49,36 @@ int main(int argc, char **argv) {
             }
             file.close();
 
-            test(list);
-
             t = clock();
-            // result = gs.convex_hull(list);
-            t = clock() - t;
+            mergeSort.convex_hull(list, result);
+            times[0] = clock() - t;
+
+            result.clear();
+            t = clock();
+            insertionSort.convex_hull(list, result);
+            times[1] = clock() - t;
+
+            result.clear();
+            t = clock();
+            radixSort.convex_hull(list, result);
+            times[2] = clock() - t;
+
+            result.clear();
+            t = clock();
+            jm.convex_hull(list, result);
+            times[3] = clock() - t;
 
             std::cout << "FECHO CONVEXO:" << std::endl;
-            for (int i = 0; i < result->get_size(); i++) {
-                std::cout << result->get_item(i).get_x() << ' ' << result->get_item(i).get_y() << std::endl;
+            for (int i = 0; i < result.size(); i++) {
+                std::cout << result[i] << std::endl;
             }
-
-            // delete list;
+            std::cout << std::endl;
+            
+            std::cout << std::fixed << std::setprecision(3);
+            std::cout << "GRAHAM+MERGESORT: " << (float) times[0] / CLOCKS_PER_SEC << 's' << std::endl;
+            std::cout << "GRAHAM+INSERTIONSORT: " << (float) times[1] / CLOCKS_PER_SEC  << 's' << std::endl;
+            std::cout << "GRAHAM+LINEAR: " << (float) times[2] / CLOCKS_PER_SEC  << 's' << std::endl;
+            std::cout << "JARVIS: " << (float) times[3] / CLOCKS_PER_SEC  << 's' << std::endl;
             break;
 
         default:
