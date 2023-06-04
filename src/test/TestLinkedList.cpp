@@ -55,6 +55,7 @@ TEST_CASE("Check pop back") {
     CHECK(list.pop_back() == 5);
     CHECK(list.pop_back() == 3);
     CHECK(list.pop_back() == 1);
+    CHECK(list.get_size() == 0);
 }
 
 TEST_CASE("Check pop front") {
@@ -84,7 +85,6 @@ TEST_CASE("Check set item") {
     CHECK(list.pop_front() == 6);
     CHECK(list.pop_front() == 7);
     CHECK(list.pop_front() == 8);
-    CHECK(list.get_size() == 0);
 }
 
 TEST_CASE("Check insert") {
