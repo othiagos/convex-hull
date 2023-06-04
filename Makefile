@@ -1,12 +1,12 @@
 NAME = convex_hull
-TEST_NAME = convexhull_test
+TEST_NAME = convex_hull_test
 CC = g++
 SRC_DIR = ./src
 INC_DIR = ./include
 LIB_DIR = $(INC_DIR)/lib
 BIN_DIR = ./bin
 OBJ_DIR = ./obj
-CFLAGS = --std=c++20 -Wall -g
+CFLAGS = --std=c++2a -Wall -g
 TEST_DIR = $(SRC_DIR)/test
 EXE = $(BIN_DIR)/$(NAME)
 EXE_TEST = $(BIN_DIR)/$(TEST_NAME)
@@ -21,7 +21,8 @@ OBJS = \
 	$(OBJ_DIR)/JarvisMarch.o
 
 TEST_OBJS = \
-	$(OBJ_DIR)/TestArrayStack.o
+	$(OBJ_DIR)/TestArrayStack.o \
+	$(OBJ_DIR)/TestLinkedList.o
 
 all: mkdir $(EXE)
 
@@ -41,7 +42,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp $(INC_DIR)/%.hpp
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CC) -c $(CFLAGS) $< -I $(INC_DIR) -o $@ 
 
-test: mkdir $(EXE_TEST)
+test: mkdir $(TEST_OBJS) $(EXE_TEST)
 
 run_test: test
 	$(EXE_TEST)

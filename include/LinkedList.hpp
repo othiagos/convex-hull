@@ -21,7 +21,7 @@ class LinkedList {
             throw "ERROR: invalid position!";
 
         p = first;
-        for (int i = 0; i < pos - 1; i++) {
+        for (int i = 0; i < pos; i++) {
             p = p->next;
         }
 
@@ -35,9 +35,8 @@ class LinkedList {
         if ((pos > size) || (pos <= 0))
             throw "ERROR: invalid position!";
 
-        // Posiciona na célula anterior a desejada
         p = first;
-        for (i = 1; i < pos - 1; i++) {
+        for (i = 1; i < pos; i++) {
             p = p->next;
         }
 
@@ -47,7 +46,7 @@ class LinkedList {
   public:
     LinkedList() {
         first = nullptr;
-        last = first;
+        last = nullptr;
         size = 0;
     }
 
@@ -64,7 +63,6 @@ class LinkedList {
 
     ~LinkedList() {
         clear();
-        delete first;
     }
 
     int get_size() const {
@@ -77,11 +75,11 @@ class LinkedList {
         return p->item;
     }
 
-    // T& operator[](int pos) {
-    //     NodeLinkedList<T> *p;
-    //     p = position(pos);
-    //     return p->item;
-    // }
+    T &operator[](int pos) {
+        NodeLinkedList<T> *p;
+        p = position(pos);
+        return p->item;
+    }
 
     void set_item(T item, int pos) {
         NodeLinkedList<T> *p;
@@ -98,7 +96,7 @@ class LinkedList {
         first = node;
         size++;
 
-        if (size == 1)
+        if (node->next == nullptr)
             last = node;
     }
 
@@ -111,24 +109,27 @@ class LinkedList {
             last->next = node;
             last = node;
             size++;
-        }
-        else
+        } else
             push_front(item);
     }
 
     void insert(T item, int pos) {
-        NodeLinkedList<T> *p, *node = new NodeLinkedList<T>();
-        p = position_before(pos);
+        if (pos != 0) {
+            NodeLinkedList<T> *p, *node = new NodeLinkedList<T>();
+            p = position_before(pos);
 
-        node->item = item;
-        node->next = p->next;
-        p->next->prev = node;
-        p->next = node;
-        node->prev = p;
-        size++;
+            node->item = item;
+            node->next = p->next;
+            if (p->next != nullptr)
+                p->next->prev = node;
+            p->next = node;
+            node->prev = p;
+            size++;
 
-        if (node->prox == nullptr)
-            last = node;
+            if (node->next == nullptr)
+                last = node;
+        } else
+            push_front(item);
     }
 
     T pop_front() {
@@ -140,10 +141,14 @@ class LinkedList {
 
         p = first;
         first = p->next;
-        first->prev = nullptr;
+        if (first != nullptr)
+            first->prev = nullptr;
         size--;
 
-        if (first->prox == nullptr)
+        if (first != nullptr && first->next == nullptr)
+            last = first;
+
+        if (first == nullptr)
             last = first;
 
         aux = p->item;
@@ -159,9 +164,12 @@ class LinkedList {
         if (size == 0)
             throw "ERROR: Empty list!";
 
-        p = position(size);
+        p = position(size - 1);
         last = p->prev;
-        last->next = nullptr;
+        if (last != nullptr)
+            last->next = nullptr;
+        else
+            first = nullptr;
         size--;
 
         aux = p->item;
@@ -172,7 +180,7 @@ class LinkedList {
 
     T erase(int pos) {
         T aux;
-        NodeLinkedList<T> *p, *q;
+        NodeLinkedList<T> *p;
 
         if (size == 0)
             throw "ERROR: Empty list!";
@@ -193,25 +201,6 @@ class LinkedList {
         return aux;
     }
 
-    int find(T c) {
-        int pos = -1;
-        NodeLinkedList<T> *p;
-
-        if (size == 0)
-            throw "ERROR: Empty list!";
-
-        p = first;
-        for (int i = 0; p != nullptr; i++) {
-            if (p->item == c) {
-                pos = i;
-                break;
-            }
-            p = p->next;
-        }
-
-        return pos;
-    }
-
     void clear() {
         NodeLinkedList<T> *p;
 
@@ -221,7 +210,6 @@ class LinkedList {
             delete p;
             p = first;
         }
-        first = nullptr;
         last = nullptr;
         size = 0;
     }
