@@ -1,41 +1,72 @@
 #include "GrahamScan.hpp"
+#include "InsertionSort.hpp"
 #include "JarvisMarch.hpp"
 #include "MergeSort.hpp"
-#include "InsertionSort.hpp"
-#include "RadixSort.hpp"
 #include "Point.hpp"
+#include "RadixSort.hpp"
+#include "LinkedList.hpp"
 
+#include <fstream>
 #include <iostream>
+#include <string>
+#include <sstream>
+#include <ctime>
+#include <unistd.h>
 
-int main(int argc, char const *argv[]) {
+void test(LinkedList<Point> list) {
+    list.pop_back();
+}
 
-    Point vec[10] {{27, 11}, {6, 8}, {6, 82}, {19, 82}, {33, 96},
-                             {45, 13}, {38, 82}, {6, 22}, {68, 79}, {66, 68}};
-    LinkedList<Point> points;
-    int n = 10;
+int main(int argc, char **argv) {
 
-    for (int i = 0; i < n; i++) {
-        points.push_back(vec[i]);
-    }
-
-    GrahamScan gs(new RadixSort());
+    LinkedList<Point> list,  *result = nullptr;
+    std::ifstream file;
+    Point p;
+    std::string line;
+    std::istringstream number;
+    GrahamScan gs(new MergeSort);
     JarvisMarch jm;
+    clock_t t;
+    
+    int c;
+    while ((c = getopt(argc, argv, "f:")) != -1) {
+        switch (c) {
+        case 'f':
+            file.open(optarg);
 
-    LinkedList<Point> *result1 = jm.convex_hull(&points);
+            if (!file.is_open())
+                return -1;
 
-    LinkedList<Point> *result2 = gs.convex_hull(&points);
+            // list = new LinkedList<Point>;
+            while (getline(file, line)) {
+                number = std::istringstream(line);
 
-    for (int i = 0; i < result1->get_size(); i++) {
-        std::cout << '(' << result1->get_item(i).get_x() << ',' << result1->get_item(i).get_y() << ')' << ' ';
+                number >> line;
+                p.set_x(std::stoi(line));
+                number >> line;
+                p.set_y(std::stoi(line));
+                list.push_back(p);
+            }
+            file.close();
+
+            test(list);
+
+            t = clock();
+            // result = gs.convex_hull(list);
+            t = clock() - t;
+
+            std::cout << "FECHO CONVEXO:" << std::endl;
+            for (int i = 0; i < result->get_size(); i++) {
+                std::cout << result->get_item(i).get_x() << ' ' << result->get_item(i).get_y() << std::endl;
+            }
+
+            // delete list;
+            break;
+
+        default:
+            break;
+        }
     }
-    std::cout << std::endl;
-    for (int i = 0; i < result2->get_size(); i++) {
-        std::cout << '(' << result2->get_item(i).get_x() << ',' << result2->get_item(i).get_y() << ')' << ' ';
-    }
-    std::cout << std::endl;
-
-    delete result1;
-    delete result2;
 
     return 0;
 }

@@ -11,6 +11,7 @@ class Point {
 
   public:
     Point(int x = 0, int y = 0);
+    Point(const Point &p);
 
     int get_x() const;
     int get_y() const;
