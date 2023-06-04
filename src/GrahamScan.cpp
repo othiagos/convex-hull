@@ -16,52 +16,48 @@ Point GrahamScan::nextToTop(ArrayStack<Point> *S) {
     return res;
 }
 
-LinkedList<Point> *GrahamScan::convex_hull(LinkedList<Point> *points) {
-    int ymin = points->get_item(0).get_y(), min = 0;
-    for (int i = 1; i < points->get_size(); i++) {
-        int y = points->get_item(i).get_y();
+void GrahamScan::convex_hull(LinkedList<Point> points, LinkedList<Point> &result) {
+    int ymin = points[0].get_y(), min = 0;
+    for (int i = 1; i < points.size(); i++) {
+        int y = points[i].get_y();
 
-        if ((y < ymin) || (ymin == y && points->get_item(i).get_x() < points->get_item(min).get_x())) {
-            ymin = points->get_item(i).get_y(), min = i;
+        if ((y < ymin) || (ymin == y && points[i].get_x() < points[min].get_x())) {
+            ymin = points[i].get_y(), min = i;
         }
     }
 
-    Point temp = points->get_item(0);
-    points->set_item(points->get_item(min), 0);
-    points->set_item(temp, min);
+    Point temp = points[0];
+    points[0] = points[min];
+    points[min] = temp;
 
-    p0 = points->get_item(0);
-    sort->sort(*points);
+    sort->sort(points);
 
     int m = 1;
-    for (int i = 1; i < points->get_size(); i++) {
-        while (i < points->get_size() - 1 && Point::orientation(p0, points->get_item(i), points->get_item(i + 1)) == 0) {
+    for (int i = 1; i < points.size(); i++) {
+        while (i < points.size() - 1 && Point::orientation(points[0], points[i], points[i + 1]) == 0) {
             i++;
         }
 
-        points->set_item(points->get_item(i), m);
+        points[m] = points[i];
         m++;
     }
 
-    if (m < 3)
-        return {};
+    if (m < 3) return;
 
     ArrayStack<Point> stack;
-    stack.push(points->get_item(0));
-    stack.push(points->get_item(1));
-    stack.push(points->get_item(2));
+    stack.push(points[0]);
+    stack.push(points[1]);
+    stack.push(points[2]);
 
     for (int i = 3; i < m; i++) {
-        while (stack.get_size() > 1 && Point::orientation(nextToTop(&stack), stack.top(), points->get_item(i)) != 2) {
+        while (stack.get_size() > 1 && Point::orientation(nextToTop(&stack), stack.top(), points[i]) != 2) {
             stack.pop();
         }
-        stack.push(points->get_item(i));
+        stack.push(points[i]);
     }
 
-    LinkedList<Point> *result = new LinkedList<Point>();
     while (!stack.is_empty()) {
         Point p = stack.pop();
-        result->push_back(p);
+        result.push_front(p);
     }
-    return result;
 }

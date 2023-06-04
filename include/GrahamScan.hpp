@@ -8,7 +8,6 @@
 
 class GrahamScan {
 private:
-    Point p0;
     Sort *sort;
 
     Point nextToTop(ArrayStack<Point> *S);
@@ -16,5 +15,5 @@ private:
 public:
     GrahamScan(Sort *sort);
     ~GrahamScan();
-    LinkedList<Point> *convex_hull(LinkedList<Point> *points);
+    void convex_hull(LinkedList<Point> points, LinkedList<Point> &result);
 };

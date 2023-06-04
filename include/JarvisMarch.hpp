@@ -3,5 +3,5 @@
 
 class JarvisMarch {
 public:
-    LinkedList<Point> *convex_hull(const LinkedList<Point> *points) const;
+    void convex_hull(LinkedList<Point> &points, LinkedList<Point> &result);
 };
