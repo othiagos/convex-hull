@@ -137,3 +137,27 @@ TEST_CASE("Check operator==") {
     CHECK(list[2] == 8);
     CHECK(list[4] == 5);
 }
+
+TEST_CASE("Check iterator") {
+    LinkedList<int> list;
+
+    list.push_back(1);
+    list.push_back(2);
+
+    for (int i : list) {
+        list.push_back(i * 3);
+    }
+
+    CHECK(list[0] == 1);
+    CHECK(list[1] == 2);
+    CHECK(list[2] == 3);
+    CHECK(list[3] == 6);
+}
+
+TEST_CASE("Check initializer list") {
+    LinkedList<int> list{ 3, 4, 5};
+
+    CHECK(list[0] == 3);
+    CHECK(list[1] == 4);
+    CHECK(list[2] == 5);
+}
