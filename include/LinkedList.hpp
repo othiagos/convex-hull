@@ -1,10 +1,35 @@
 #pragma once
 
+#include <initializer_list>
+
 template <typename T>
 struct NodeLinkedList {
     NodeLinkedList *next = nullptr;
     NodeLinkedList *prev = nullptr;
     T item;
+};
+
+template <typename T>
+class Iterator {
+private:
+    NodeLinkedList<T> *_node;
+
+public:
+    Iterator(NodeLinkedList<T> *node) {
+        this->_node = node;
+    }
+
+    T operator*() const {
+        return _node->item;
+    }
+
+    void operator++() {
+        _node = _node->next;
+    }
+
+    bool operator!=(const Iterator& o) const {
+        return _node != o._node->next;
+    }
 };
 
 template <typename T>
@@ -46,6 +71,15 @@ class LinkedList {
         _size = 0;
     }
 
+    LinkedList(std::initializer_list<T> args) {
+        _first = nullptr;
+        _last = nullptr;
+        _size = 0;
+
+        for (T item : args)
+            this->push_back(item);
+    }
+
     LinkedList(const LinkedList<T> &o) {
         _first = nullptr;
         _last = nullptr;
@@ -59,6 +93,14 @@ class LinkedList {
 
     ~LinkedList() {
         clear();
+    }
+
+    Iterator<T> begin() {
+        return Iterator<T>(_first);
+    }
+
+    Iterator<T> end() {
+        return Iterator<T>(_last);
     }
 
     int size() const {
