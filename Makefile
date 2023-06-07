@@ -21,7 +21,6 @@ OBJS = \
 	$(OBJ_DIR)/JarvisMarch.o
 
 TEST_OBJS = \
-	$(OBJ_DIR)/TestArrayStack.o \
 	$(OBJ_DIR)/TestLinkedList.o
 
 all: mkdir $(EXE)

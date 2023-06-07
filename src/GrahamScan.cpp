@@ -8,11 +8,11 @@ GrahamScan::~GrahamScan() {
     delete sort;
 }
 
-Point GrahamScan::nextToTop(ArrayStack<Point> *S) {
-    Point p = S->top();
-    S->pop();
-    Point res = S->top();
-    S->push(p);
+Point GrahamScan::nextToTop(LinkedList<Point> &s) {
+    Point p = s[s.size() - 1];
+    s.pop_back();
+    Point res = s[s.size() - 1];
+    s.push_back(p);
     return res;
 }
 
@@ -44,20 +44,20 @@ void GrahamScan::convex_hull(LinkedList<Point> points, LinkedList<Point> &result
 
     if (m < 3) return;
 
-    ArrayStack<Point> stack;
-    stack.push(points[0]);
-    stack.push(points[1]);
-    stack.push(points[2]);
+    LinkedList<Point> stack;
+    stack.push_back(points[0]);
+    stack.push_back(points[1]);
+    stack.push_back(points[2]);
 
     for (int i = 3; i < m; i++) {
-        while (stack.get_size() > 1 && Point::orientation(nextToTop(&stack), stack.top(), points[i]) != 2) {
-            stack.pop();
+        while (stack.size() > 1 && Point::orientation(nextToTop(stack), stack[stack.size() - 1], points[i]) != 2) {
+            stack.pop_back();
         }
-        stack.push(points[i]);
+        stack.push_back(points[i]);
     }
 
-    while (!stack.is_empty()) {
-        Point p = stack.pop();
+    while (!(stack.size() == 0)) {
+        Point p = stack.pop_back();
         result.push_front(p);
     }
 }

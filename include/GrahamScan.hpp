@@ -1,6 +1,5 @@
 #pragma once
 
-#include "ArrayStack.hpp"
 #include "LinkedList.hpp"
 #include "Point.hpp"
 #include "Sort.hpp"
@@ -10,7 +9,7 @@ class GrahamScan {
 private:
     Sort *sort;
 
-    Point nextToTop(ArrayStack<Point> *S);
+    Point nextToTop(LinkedList<Point> &s);
 
 public:
     GrahamScan(Sort *sort);
