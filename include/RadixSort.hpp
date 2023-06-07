@@ -4,6 +4,8 @@
 
 #include <iostream>
 
+#define PRECISION 1e7
+
 class RadixSort : public Sort {
 private:
     Point getMaxElement(LinkedList<Point> &vec);

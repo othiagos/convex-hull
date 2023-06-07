@@ -12,7 +12,7 @@ Point RadixSort::getMaxElement(LinkedList<Point> &vec) {
 }
 
 int RadixSort::calculateNumBits(float angle) {
-    int count, angleB = angle * 100;
+    int count, angleB = angle * PRECISION;
     for (count = 0; angleB > 0; count++) {
         angleB >>= 1;
     }
@@ -20,7 +20,7 @@ int RadixSort::calculateNumBits(float angle) {
 }
 
 int RadixSort::digit(float angle, int pos) {
-    int angleB = angle * 100;
+    int angleB = angle * PRECISION;
     return (angleB >> pos) & 1;
 }
 
@@ -34,7 +34,7 @@ void RadixSort::quicksortB(LinkedList<Point> &vec, const int &left, const int &r
     while (j != i) {
         while (digit(vec[i].angle(p), position) == 0 && (i < j))
             i++;
-        while (digit(vec[i].angle(p), position) == 1 && (j > i))
+        while (digit(vec[j].angle(p), position) == 1 && (j > i))
             j--;
 
         Point temp = vec[i];
