@@ -36,7 +36,7 @@ int main(int argc, char **argv) {
             file.open(optarg);
 
             if (!file.is_open()) {
-                std::cout << "File not found!" << std::endl;
+                std::cout << "Could not open the file!" << std::endl;
                 return -1;
             }
 
@@ -52,6 +52,7 @@ int main(int argc, char **argv) {
                 }
                 file.close();
             } catch (const std::invalid_argument &e) {
+                file.close();
                 std::cout << "Error read file!" << std::endl;
                 break;
             }
@@ -84,7 +85,7 @@ int main(int argc, char **argv) {
             std::cout << std::fixed << std::setprecision(3);
             std::cout << "GRAHAM+MERGESORT: " << (float)times[0] / CLOCKS_PER_SEC << 's' << std::endl;
             std::cout << "GRAHAM+INSERTIONSORT: " << (float)times[1] / CLOCKS_PER_SEC << 's' << std::endl;
-            std::cout << "GRAHAM+LINEAR: " << (float)times[2] / CLOCKS_PER_SEC << 's' << std::endl;
+            std::cout << "GRAHAM+RADIXSORT: " << (float)times[2] / CLOCKS_PER_SEC << 's' << std::endl;
             std::cout << "JARVIS: " << (float)times[3] / CLOCKS_PER_SEC << 's' << std::endl;
             break;
 
