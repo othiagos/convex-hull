@@ -161,3 +161,51 @@ TEST_CASE("Check initializer list") {
     CHECK(list[1] == 4);
     CHECK(list[2] == 5);
 }
+
+TEST_CASE("Check throw empty list") {
+    LinkedList<int> list;
+
+    CHECK_THROWS_AS(list.pop_back(), llexcp::EmptyList);
+}
+
+TEST_CASE("Check throw empty list") {
+    LinkedList<int> list;
+
+    CHECK_THROWS_AS(list.pop_front(), llexcp::EmptyList);
+}
+
+TEST_CASE("Check throw empty list") {
+    LinkedList<int> list;
+
+    CHECK_THROWS_AS(list.erase(0), llexcp::EmptyList);
+}
+
+TEST_CASE("Check throw invalid position") {
+    LinkedList<int> list;
+
+    CHECK_THROWS_AS(list.get_item(0), llexcp::InvalidPosition);
+}
+
+TEST_CASE("Check throw invalid position") {
+    LinkedList<int> list;
+
+    CHECK_THROWS_AS(list.get_item(-1), llexcp::InvalidPosition);
+}
+
+TEST_CASE("Check throw invalid position") {
+    LinkedList<int> list;
+
+    CHECK_THROWS_AS(list.get_item(3), llexcp::InvalidPosition);
+}
+
+TEST_CASE("Check throw invalid position") {
+    LinkedList<int> list;
+
+    CHECK_THROWS_AS(list.insert(1, -1), llexcp::InvalidPosition);
+}
+
+TEST_CASE("Check throw invalid position") {
+    LinkedList<int> list;
+
+    CHECK_THROWS_AS(list.insert(1, 1), llexcp::InvalidPosition);
+}

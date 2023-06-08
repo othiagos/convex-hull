@@ -1,5 +1,7 @@
 #pragma once
 
+#include "LinkedListExcp.hpp"
+
 #include <initializer_list>
 
 template <typename T>
@@ -42,8 +44,8 @@ class LinkedList {
     NodeLinkedList<T> *position(int pos) const {
         NodeLinkedList<T> *p = _first;
 
-        if ((pos > _size) || (pos < 0))
-            throw "ERROR: invalid position!";
+        if (pos > _size || pos < 0 || p == nullptr)
+            throw llexcp::InvalidPosition(pos);
 
         for (int i = 0; i < pos; i++) {
             p = p->next;
@@ -55,8 +57,8 @@ class LinkedList {
         NodeLinkedList<T> *p = _first;
         int i;
 
-        if ((pos > _size) || (pos <= 0))
-            throw "ERROR: invalid position!";
+        if (pos > _size || pos <= 0 || p == nullptr)
+            throw llexcp::InvalidPosition(pos);
 
         for (i = 1; i < pos; i++) {
             p = p->next;
@@ -177,7 +179,7 @@ class LinkedList {
         NodeLinkedList<T> *p;
 
         if (_size == 0)
-            throw "ERROR: Empty list!";
+            throw llexcp::EmptyList(_size);
 
         p = _first;
         _first = p->next;
@@ -202,7 +204,7 @@ class LinkedList {
         NodeLinkedList<T> *p;
 
         if (_size == 0)
-            throw "ERROR: Empty list!";
+            throw llexcp::EmptyList(_size);
 
         p = position(_size - 1);
         _last = p->prev;
@@ -223,7 +225,7 @@ class LinkedList {
         NodeLinkedList<T> *p;
 
         if (_size == 0)
-            throw "ERROR: Empty list!";
+            throw llexcp::EmptyList(_size);
 
         if (pos == 0)
             return pop_front();
