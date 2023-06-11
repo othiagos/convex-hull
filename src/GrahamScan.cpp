@@ -42,7 +42,10 @@ void GrahamScan::convex_hull(LinkedList<Point> points, LinkedList<Point> &result
         m++;
     }
 
-    if (m < 3) return;
+    if (m < 3) {
+        result = {};
+        return;
+    }
 
     LinkedList<Point> stack;
     stack.push_back(points[0]);

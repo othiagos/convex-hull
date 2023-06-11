@@ -26,7 +26,7 @@ TEST_OBJS = \
 all: mkdir $(EXE)
 
 run: all
-	$(EXE)
+	$(EXE) $(ARGS)
 
 mkdir:
 	mkdir -p $(BIN_DIR)

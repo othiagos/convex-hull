@@ -16,7 +16,7 @@
 
 int main(int argc, char **argv) {
 
-    LinkedList<Point> list, result;
+    LinkedList<Point> list, r_merge_sort, r_insertion_sort, r_radix_sort, r_jarvis;
     std::ifstream file;
     std::string line;
     Point p;
@@ -58,28 +58,24 @@ int main(int argc, char **argv) {
             }
 
             t = clock();
-            mergeSort.convex_hull(list, result);
+            mergeSort.convex_hull(list, r_merge_sort);
             times[0] = clock() - t;
 
-            result.clear();
             t = clock();
-            insertionSort.convex_hull(list, result);
+            insertionSort.convex_hull(list, r_insertion_sort);
             times[1] = clock() - t;
 
-            result.clear();
             t = clock();
-            radixSort.convex_hull(list, result);
+            radixSort.convex_hull(list, r_radix_sort);
             times[2] = clock() - t;
 
-            result.clear();
             t = clock();
-            jm.convex_hull(list, result);
+            jm.convex_hull(list, r_jarvis);
             times[3] = clock() - t;
 
             std::cout << "FECHO CONVEXO:" << std::endl;
-            for (int i = 0; i < result.size(); i++) {
-                std::cout << result[i] << std::endl;
-            }
+            for (Point p : r_merge_sort)
+                std::cout << p << std::endl;
             std::cout << std::endl;
 
             std::cout << std::fixed << std::setprecision(3);
